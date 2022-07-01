@@ -14,8 +14,6 @@ const Dashboard = ({ products }) => {
   if (!session) router.push("/");
   if (session && !session.user.name) router.push("/setup");
 
-  console.log(products);
-
   return (
     <div>
       <Header />
@@ -53,6 +51,11 @@ const Dashboard = ({ products }) => {
                   <Link href={`/dashboard/product/${product.id}`}>
                     <a className="border p-2 text-sm font-bold uppercase">
                       Edit
+                    </a>
+                  </Link>
+                  <Link href={`/product/${product.id}`}>
+                    <a className="border p-2 text-sm font-bold uppercase">
+                      View
                     </a>
                   </Link>
                 </div>
