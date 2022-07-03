@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
-const Header = () => {
+const Header = ({ hasSales }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const isLoading = status === "loading";
@@ -25,11 +25,13 @@ const Header = () => {
       {session &&
         (router.asPath === "/dashboard" ? (
           <>
-            <div className="mr-3">
-              <Link href={`/dashboard/sales`}>
-                <a className="underline">See sales</a>
-              </Link>
-            </div>
+            {hasSales && (
+              <div className="mr-3">
+                <Link href={`/dashboard/sales`}>
+                  <a className="underline">See sales</a>
+                </Link>
+              </div>
+            )}
             <div className="mr-3">
               <Link href={`/dashboard/new`}>
                 <a className="underline">Create a new product</a>

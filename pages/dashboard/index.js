@@ -2,14 +2,21 @@ import { useSession, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Header from "components/Header";
 import Link from "next/link";
-import { getProducts, getPurchases } from "lib/data";
+import { getProducts, getPurchases, getSales } from "lib/data";
 import prisma from "lib/prisma";
+import { useState, useEffect } from "react";
 
-const Dashboard = ({ products, purchases }) => {
-  console.log(products);
+const Dashboard = ({ products, purchases, sales }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const isLoading = status === "loading";
+
+  const [hasSales, setHasSales] = useState(false);
+
+  useEffect(() => {
+    setHasSales(sales.length > 0 ? true : false);
+  }, [sales]);
+
   if (isLoading) return null;
 
   if (!session) router.push("/");
@@ -17,7 +24,7 @@ const Dashboard = ({ products, purchases }) => {
 
   return (
     <div>
-      <Header />
+      <Header hasSales={hasSales} />
       <h1 className="mt-20 flex justify-center text-xl">Dashboard</h1>
 
       <div className="mt-10 flex justify-center">
@@ -129,10 +136,14 @@ export async function getServerSideProps(context) {
   let purchases = await getPurchases(prisma, { author: session.user.id });
   purchases = JSON.parse(JSON.stringify(purchases));
 
+  let sales = await getSales(prisma, { author: session.user.id });
+  sales = JSON.parse(JSON.stringify(sales));
+
   return {
     props: {
       products,
       purchases,
+      sales,
     },
   };
 }

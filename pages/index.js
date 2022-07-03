@@ -36,12 +36,20 @@ export default function Home({ products }) {
                     <p>${product.price / 100}</p>
                   )}
                 </div>
-                <div className="">
-                  <Link href={`/product/${product.id}`}>
-                    <a className="ml-2 border p-2 text-sm font-bold uppercase">
-                      View
-                    </a>
-                  </Link>
+                <div className="flex flex-col">
+                  <div className="">
+                    <Link href={`/product/${product.id}`}>
+                      <a className="ml-2 border p-2 text-sm font-bold uppercase">
+                        View
+                      </a>
+                    </Link>
+                  </div>
+                  {product.purchases && product.purchases.length > 0 && (
+                    <p className="mt-3 ml-2 text-center">
+                      {product.purchases.length}{" "}
+                      {product.purchases.length === 1 ? "sale" : "sales"}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
@@ -52,8 +60,10 @@ export default function Home({ products }) {
 }
 
 export async function getServerSideProps(context) {
-  let products = await getProducts(prisma, { take: 3 });
+  let products = await getProducts(prisma, { take: 3, includePurchases: true });
   products = JSON.parse(JSON.stringify(products));
+
+  products.sort((a, b) => b.purchases.length - a.purchases.length);
 
   return {
     props: {
