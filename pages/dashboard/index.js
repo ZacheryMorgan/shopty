@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Header from "components/Header";
 import Link from "next/link";
 import { getProducts, getPurchases, getSales } from "lib/data";
-import prisma from "lib/prisma";
+import { prisma } from "lib/prisma.ts";
 import { useState, useEffect } from "react";
 
 const Dashboard = ({ products, purchases, sales }) => {

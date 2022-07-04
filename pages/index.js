@@ -1,10 +1,10 @@
 import Header from "components/Header";
 import { getProducts } from "lib/data";
-import prisma from "lib/prisma";
+import { prisma } from "lib/prisma.ts";
 import Link from "next/link";
 
 export default function Home({ products }) {
-  console.log(products);
+  // console.log(products);
   return (
     <div>
       <Header />

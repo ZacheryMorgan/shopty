@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useSession, getSession } from "next-auth/react";
 
-import prisma from "lib/prisma";
+import { prisma } from "lib/prisma.ts";
 import { getSales } from "lib/data";
 
 import Header from "components/Header";
