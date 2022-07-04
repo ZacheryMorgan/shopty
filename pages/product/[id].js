@@ -1,7 +1,7 @@
 import Header from "components/Header";
 import { alreadyPurchased, getProduct } from "lib/data";
 import Link from "next/link";
-import prisma from "lib/prisma";
+import { prisma } from "lib/prisma.ts";
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Head from "next/head";

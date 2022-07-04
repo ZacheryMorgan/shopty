@@ -1,7 +1,7 @@
 import middleware from "middleware/middleware";
 import nextConnect from "next-connect";
 
-import prisma from "lib/prisma";
+import { prisma } from "lib/prisma.ts";
 import { getSession } from "next-auth/react";
 import { upload } from "lib/upload";
 
